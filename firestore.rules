@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isAuthor() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'author' || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Posts collection
+    match /posts/{postId} {
+      allow read: if true; // Anyone can read posts
+      allow create: if isAuthenticated(); // Any authenticated user can create posts for now
+      allow update, delete: if isAuthenticated(); // Any authenticated user can edit posts for now
+    }
+
+    // Comments collection
+    match /comments/{commentId} {
+      allow read: if true; // Anyone can read comments
+      allow create: if isAuthenticated(); // Any authenticated user can comment
+      allow update, delete: if isAuthenticated(); // Any authenticated user can edit comments for now
+    }
+
+    // Authors collection
+    match /authors/{authorId} {
+      allow read: if true; // Anyone can read author profiles
+      allow create, update, delete: if isAuthenticated(); // Any authenticated user can manage authors for now
+    }
+
+    // Applications collection
+    match /applications/{applicationId} {
+      allow read, write: if isAuthenticated(); // Any authenticated user can access applications for now
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if isAuthenticated(); // Any authenticated user can access user data for now
+    }
+
+    // Notifications collection
+    match /notifications/{notificationId} {
+      allow read, write: if isAuthenticated(); // Any authenticated user can access notifications for now
+    }
+
+    // Subscribers collection
+    match /subscribers/{subscriberId} {
+      allow create: if true;
+      allow read: if false;
+    }
+  }
+}
