@@ -1,5 +1,4 @@
 import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { ArrowLeftIcon, GlobeAltIcon, HeartIcon, LightBulbIcon } from '@heroicons/react/24/outline';
 
@@ -97,9 +96,11 @@ export default function AboutUsPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-8">
                 <div className="flex items-center mb-6">
-                  <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mr-6">
-                    <span className="text-2xl font-bold text-blue-600">S</span>
-                  </div>
+                  <img
+                    src="/sian.jpg"
+                    alt="Sian"
+                    className="w-20 h-20 rounded-full object-cover mr-6"
+                  />
                   <div>
                     <h3 className="text-2xl font-bold text-slate-900">Sian</h3>
                     <p className="text-blue-600 font-semibold">Editor</p>
@@ -136,9 +137,11 @@ export default function AboutUsPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-8">
                 <div className="flex items-center mb-6">
-                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mr-6">
-                    <span className="text-2xl font-bold text-green-600">C</span>
-                  </div>
+                  <img
+                    src="/carolyn.jpg"
+                    alt="Carolyn"
+                    className="w-20 h-20 rounded-full object-cover mr-6"
+                  />
                   <div>
                     <h3 className="text-2xl font-bold text-slate-900">Carolyn</h3>
                     <p className="text-green-600 font-semibold">Deputy Editor</p>
@@ -249,8 +252,6 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 } 
