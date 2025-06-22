@@ -10,6 +10,7 @@ import { BlogPost } from '@/types/blog';
 import { categories } from '@/data/mockData';
 import Link from 'next/link';
 import { ArrowLeftIcon, CalendarIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 export default function PostPage() {
   const params = useParams();
@@ -59,7 +60,7 @@ export default function PostPage() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Post Not Found</h1>
-            <p className="text-gray-600 mb-6">{error || 'The post you\'re looking for doesn\'t exist.'}</p>
+            <p className="text-gray-600 mb-6">{error || 'The post you&apos;re looking for doesn&apos;t exist.'}</p>
             <Link href="/" className="btn-primary">
               Back to Home
             </Link>
@@ -149,10 +150,12 @@ export default function PostPage() {
         {/* Featured Image */}
         {post.imageUrl && (
           <div className="mb-8">
-            <img 
+            <Image 
               src={post.imageUrl} 
               alt={post.title}
               className="w-full h-64 md:h-96 object-cover rounded-lg shadow-md"
+              width={1280}
+              height={720}
             />
           </div>
         )}

@@ -1,6 +1,7 @@
 import Navigation from '@/components/Navigation';
 import Link from 'next/link';
 import { ArrowLeftIcon, GlobeAltIcon, HeartIcon, LightBulbIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 export default function AboutUsPage() {
   return (
@@ -96,9 +97,11 @@ export default function AboutUsPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-8">
                 <div className="flex items-center mb-6">
-                  <img
+                  <Image
                     src="/sian.jpg"
                     alt="Sian"
+                    width={80}
+                    height={80}
                     className="w-20 h-20 rounded-full object-cover mr-6"
                   />
                   <div>
@@ -137,9 +140,11 @@ export default function AboutUsPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-8">
                 <div className="flex items-center mb-6">
-                  <img
+                  <Image
                     src="/carolyn.jpg"
                     alt="Carolyn"
+                    width={80}
+                    height={80}
                     className="w-20 h-20 rounded-full object-cover mr-6"
                   />
                   <div>

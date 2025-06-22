@@ -36,7 +36,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
 
     setIsSubmitting(true);
     try {
-      const commentData: any = {
+      const commentData: unknown = {
         postId,
         author: newComment.author,
         content: newComment.content,
@@ -45,7 +45,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
       
       // Only include email if it's not empty
       if (newComment.email.trim()) {
-        commentData.email = newComment.email;
+        commentData['email'] = newComment.email;
       }
       
       await commentService.addComment(commentData);

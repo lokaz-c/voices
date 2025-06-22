@@ -8,6 +8,7 @@ import { BlogPost, BlogCategory } from '@/types/blog';
 import { categories } from '@/data/mockData';
 import Navigation from '@/components/Navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import Image from 'next/image';
 
 export default function AdminPostsPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -149,9 +150,11 @@ export default function AdminPostsPage() {
             {posts.map((post) => (
               <div key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                 {post.imageUrl && (
-                  <img 
+                  <Image 
                     src={post.imageUrl} 
                     alt={post.title}
+                    width={200}
+                    height={100}
                     className="w-full h-48 object-cover"
                   />
                 )}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CheckCircleIcon, XCircleIcon, TrashIcon, EyeIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, XCircleIcon, TrashIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
 import { blogPosts } from '@/data/mockData';
 import { Comment } from '@/types/blog';

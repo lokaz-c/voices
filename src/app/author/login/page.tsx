@@ -113,7 +113,7 @@ export default function AuthorLoginPage() {
 
             <div className="text-center space-y-2">
               <p className="text-sm text-gray-600">
-                Don't have an author account?
+                Don&apos;t have an author account?
               </p>
               <Link 
                 href="/become-author" 

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CheckCircleIcon, XCircleIcon, EyeIcon, UserIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, XCircleIcon, EyeIcon, UserIcon, ClockIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
-import { applicationService, notificationService } from '@/lib/firebaseServices';
+import { applicationService } from '@/lib/firebaseServices';
 import { AuthorApplication } from '@/types/blog';
 
 export default function ApplicationsManagement() {

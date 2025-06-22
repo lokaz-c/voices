@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { UserIcon, CalendarIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
 import { blogPosts } from '@/data/mockData';
+import Link from 'next/link';
 
 interface Author {
   name: string;
@@ -127,14 +128,14 @@ export default function AuthorsPage() {
             Want to Join Our Community?
           </h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            We're always looking for new voices and perspectives. If you have a story to tell, we'd love to hear from you.
+            We&apos;re always looking for new voices and perspectives. If you have a story to tell, we&apos;d love to hear from you.
           </p>
-          <a
+          <Link
             href="/become-author"
             className="btn-primary inline-flex items-center space-x-2"
           >
             <span>Become an Author</span>
-          </a>
+          </Link>
         </div>
       </section>
     </div>

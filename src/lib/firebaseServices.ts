@@ -43,9 +43,9 @@ const isFirebaseConfigured = firebaseConfig.apiKey &&
   firebaseConfig.projectId && 
   firebaseConfig.projectId !== 'your_project_id';
 
-let app: any = null;
-let auth: any = null;
-let db: any = null;
+let app: unknown = null;
+let auth: unknown = null;
+let db: unknown = null;
 
 if (isFirebaseConfigured) {
   try {

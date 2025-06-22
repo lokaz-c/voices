@@ -13,7 +13,7 @@ export default function CategoryPage() {
   const slug = params.slug as string;
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState<any>(null);
+  const [category, setCategory] = useState<unknown>(null);
 
   useEffect(() => {
     loadCategoryData();
@@ -46,7 +46,7 @@ export default function CategoryPage() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Category Not Found</h1>
-            <p className="text-gray-600">The category you're looking for doesn't exist.</p>
+            <p className="text-gray-600">The category you&apos;re looking for doesn&apos;t exist.</p>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { authorService } from '@/lib/firebaseServices';
 import { Author } from '@/types/blog';
 import Navigation from '@/components/Navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import Image from 'next/image';
 
 export default function AdminAuthorsPage() {
   const [authors, setAuthors] = useState<Author[]>([]);
@@ -153,10 +154,12 @@ export default function AdminAuthorsPage() {
                 <div className="p-6">
                   <div className="flex items-center mb-4">
                     {author.avatar ? (
-                      <img 
+                      <Image 
                         src={author.avatar} 
                         alt={author.name}
                         className="w-16 h-16 rounded-full object-cover mr-4"
+                        width={64}
+                        height={64}
                       />
                     ) : (
                       <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mr-4">

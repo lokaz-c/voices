@@ -17,7 +17,7 @@ export default function ProtectedRoute({
   requireAuthor = false,
   fallback 
 }: ProtectedRouteProps) {
-  const { user, isAuthenticated, isAdmin, isAuthor, loading } = useAuth();
+  const { isAuthenticated, isAdmin, isAuthor, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -6,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Logo and Slogan */}
         <div className="flex items-center gap-4 text-center md:text-left">
-          <img src="/logo.png" alt="Voices and Viewpoints Logo" className="h-10 w-auto" />
+          <Image src="/logo.png" alt="Voices and Viewpoints Logo" width={40} height={40} className="h-10 w-auto" />
           <div>
             <h2 className="text-lg font-bold text-slate-900 mb-1">Voices and Viewpoints</h2>
             <p className="text-gray-600 text-sm">A place where ordinary people tell their not-so-ordinary stories...</p>

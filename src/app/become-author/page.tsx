@@ -5,6 +5,7 @@ import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
 import { categories } from '@/data/mockData';
 import { applicationService } from '@/lib/firebaseServices';
+import Link from 'next/link';
 
 interface AuthorApplication {
   firstName: string;
@@ -37,18 +38,9 @@ export default function BecomeAuthorPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (field: keyof AuthorApplication, value: string | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
   };
 
   const handleCategoryToggle = (category: string) => {
@@ -72,7 +64,6 @@ export default function BecomeAuthorPage() {
     if (!formData.sampleTitle.trim()) newErrors.sampleTitle = 'Sample article title is required';
     if (!formData.sampleExcerpt.trim()) newErrors.sampleExcerpt = 'Sample excerpt is required';
 
-    setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -80,7 +71,6 @@ export default function BecomeAuthorPage() {
     e.preventDefault();
     if (!validateForm()) return;
     setIsSubmitting(true);
-    setErrors({});
     try {
       // Map form fields to Firestore AuthorApplication type
       const application = {
@@ -99,7 +89,7 @@ export default function BecomeAuthorPage() {
       await applicationService.submitApplication(application);
       setIsSubmitted(true);
     } catch (error) {
-      setErrors({ submit: 'Failed to submit application. Please try again.' });
+      console.error('Failed to submit application. Please try again.', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -115,20 +105,20 @@ export default function BecomeAuthorPage() {
             Application Submitted!
           </h1>
           <p className="text-gray-600 mb-8">
-            Thank you for your interest in becoming an author at Views and Viewpoints. We've received your application and will review it carefully.
+            Thank you for your interest in becoming an author at Views and Viewpoints. We&apos;ve received your application and will review it carefully.
           </p>
           <div className="bg-blue-50 rounded-lg p-6 mb-8">
             <h3 className="font-semibold text-slate-900 mb-2">What happens next?</h3>
             <ul className="text-left text-gray-600 space-y-2">
-              <li>• We'll review your application within 3-5 business days</li>
-              <li>• If approved, we'll send you writer guidelines and next steps</li>
-              <li>• You'll have access to our content management system</li>
-              <li>• We'll help you publish your first article</li>
+              <li>• We&apos;ll review your application within 3-5 business days</li>
+              <li>• If approved, we&apos;ll send you writer guidelines and next steps</li>
+              <li>• You&apos;ll have access to our content management system</li>
+              <li>• We&apos;ll help you publish your first article</li>
             </ul>
           </div>
-          <a href="/" className="btn-primary">
+          <Link href="/" className="btn-primary">
             Return to Homepage
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -169,16 +159,8 @@ export default function BecomeAuthorPage() {
                       type="text"
                       value={formData.firstName}
                       onChange={(e) => handleInputChange('firstName', e.target.value)}
-                      className={`input-field ${
-                        errors.firstName ? 'border-red-500' : ''
-                      }`}
+                      className="input-field"
                     />
-                    {errors.firstName && (
-                      <p className="text-red-500 text-sm mt-1 flex items-center">
-                        <XCircleIcon className="h-4 w-4 mr-1" />
-                        {errors.firstName}
-                      </p>
-                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -188,16 +170,8 @@ export default function BecomeAuthorPage() {
                       type="text"
                       value={formData.lastName}
                       onChange={(e) => handleInputChange('lastName', e.target.value)}
-                      className={`input-field ${
-                        errors.lastName ? 'border-red-500' : ''
-                      }`}
+                      className="input-field"
                     />
-                    {errors.lastName && (
-                      <p className="text-red-500 text-sm mt-1 flex items-center">
-                        <XCircleIcon className="h-4 w-4 mr-1" />
-                        {errors.lastName}
-                      </p>
-                    )}
                   </div>
                 </div>
                 <div className="mt-4">
@@ -208,16 +182,8 @@ export default function BecomeAuthorPage() {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className={`input-field ${
-                      errors.email ? 'border-red-500' : ''
-                    }`}
+                    className="input-field"
                   />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1 flex items-center">
-                      <XCircleIcon className="h-4 w-4 mr-1" />
-                      {errors.email}
-                    </p>
-                  )}
                 </div>
               </div>
 
@@ -232,17 +198,9 @@ export default function BecomeAuthorPage() {
                     value={formData.bio}
                     onChange={(e) => handleInputChange('bio', e.target.value)}
                     rows={4}
-                    className={`textarea-field ${
-                      errors.bio ? 'border-red-500' : ''
-                    }`}
+                    className="textarea-field"
                     placeholder="Tell us about yourself, your background, and what drives your writing..."
                   />
-                  {errors.bio && (
-                    <p className="text-red-500 text-sm mt-1 flex items-center">
-                      <XCircleIcon className="h-4 w-4 mr-1" />
-                      {errors.bio}
-                    </p>
-                  )}
                 </div>
                 <div className="mt-4">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -252,17 +210,9 @@ export default function BecomeAuthorPage() {
                     value={formData.writingExperience}
                     onChange={(e) => handleInputChange('writingExperience', e.target.value)}
                     rows={3}
-                    className={`textarea-field ${
-                      errors.writingExperience ? 'border-red-500' : ''
-                    }`}
+                    className="textarea-field"
                     placeholder="Describe your writing experience, publications, or relevant background..."
                   />
-                  {errors.writingExperience && (
-                    <p className="text-red-500 text-sm mt-1 flex items-center">
-                      <XCircleIcon className="h-4 w-4 mr-1" />
-                      {errors.writingExperience}
-                    </p>
-                  )}
                 </div>
               </div>
 
@@ -270,7 +220,7 @@ export default function BecomeAuthorPage() {
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 mb-4">Preferred Categories</h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Select the categories you'd like to write about (select at least one):
+                  Select the categories you&apos;d like to write about (select at least one):
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {categories.map((category) => (
@@ -285,12 +235,6 @@ export default function BecomeAuthorPage() {
                     </label>
                   ))}
                 </div>
-                {errors.preferredCategories && (
-                  <p className="text-red-500 text-sm mt-2 flex items-center">
-                    <XCircleIcon className="h-4 w-4 mr-1" />
-                    {errors.preferredCategories}
-                  </p>
-                )}
               </div>
 
               {/* Sample Article */}
@@ -305,17 +249,9 @@ export default function BecomeAuthorPage() {
                       type="text"
                       value={formData.sampleTitle}
                       onChange={(e) => handleInputChange('sampleTitle', e.target.value)}
-                      className={`input-field ${
-                        errors.sampleTitle ? 'border-red-500' : ''
-                      }`}
+                      className="input-field"
                       placeholder="Enter a title for your sample article..."
                     />
-                    {errors.sampleTitle && (
-                      <p className="text-red-500 text-sm mt-1 flex items-center">
-                        <XCircleIcon className="h-4 w-4 mr-1" />
-                        {errors.sampleTitle}
-                      </p>
-                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -325,17 +261,9 @@ export default function BecomeAuthorPage() {
                       value={formData.sampleExcerpt}
                       onChange={(e) => handleInputChange('sampleExcerpt', e.target.value)}
                       rows={4}
-                      className={`textarea-field ${
-                        errors.sampleExcerpt ? 'border-red-500' : ''
-                      }`}
+                      className="textarea-field"
                       placeholder="Write a brief excerpt or summary of your sample article..."
                     />
-                    {errors.sampleExcerpt && (
-                      <p className="text-red-500 text-sm mt-1 flex items-center">
-                        <XCircleIcon className="h-4 w-4 mr-1" />
-                        {errors.sampleExcerpt}
-                      </p>
-                    )}
                   </div>
                 </div>
               </div>
@@ -394,12 +322,6 @@ export default function BecomeAuthorPage() {
                 </button>
               </div>
             </form>
-            {errors.submit && (
-              <p className="text-red-500 text-sm mt-2 flex items-center">
-                <XCircleIcon className="h-4 w-4 mr-1" />
-                {errors.submit}
-              </p>
-            )}
           </div>
         </div>
       </section>

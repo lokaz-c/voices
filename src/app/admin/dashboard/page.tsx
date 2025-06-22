@@ -24,7 +24,7 @@ export default function AdminDashboard() {
     pendingComments: 0,
     totalAuthors: 0
   });
-  const [recentPosts, setRecentPosts] = useState<any[]>([]);
+  const [recentPosts, setRecentPosts] = useState<unknown[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
