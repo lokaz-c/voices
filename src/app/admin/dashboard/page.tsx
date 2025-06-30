@@ -15,6 +15,7 @@ import {
   PencilIcon,
   PlusIcon
 } from '@heroicons/react/24/outline';
+import { BlogPost } from '@/types/blog';
 
 export default function AdminDashboard() {
   const { user } = useAuth();
@@ -24,7 +25,7 @@ export default function AdminDashboard() {
     pendingComments: 0,
     totalAuthors: 0
   });
-  const [recentPosts, setRecentPosts] = useState<unknown[]>([]);
+  const [recentPosts, setRecentPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -190,7 +191,7 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {recentPosts.map((post) => (
+                    {recentPosts.map((post: BlogPost) => (
                       <tr key={post.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4">
                           <div className="max-w-xs">
@@ -208,7 +209,9 @@ export default function AdminDashboard() {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {new Date(post.publishedAt).toLocaleDateString()}
+                          {isNaN(new Date(post.publishedAt).getTime())
+                            ? post.publishedAt
+                            : new Date(post.publishedAt).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">

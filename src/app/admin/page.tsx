@@ -107,9 +107,7 @@ export default function AdminPostsPage() {
   };
 
   const openNewPostModal = () => {
-    setEditingPost(null);
-    resetForm();
-    setShowModal(true);
+    router.push('/admin/new-post');
   };
 
   if (loading) {

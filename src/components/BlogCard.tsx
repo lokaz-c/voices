@@ -10,7 +10,15 @@ interface BlogCardProps {
 export default function BlogCard({ post }: BlogCardProps) {
   return (
     <article className="card overflow-hidden group">
-      {post.imageUrl && (
+      {post.imageUrl ? (
+        <div className="aspect-video overflow-hidden">
+          <img
+            src={post.imageUrl}
+            alt={post.title}
+            className="w-full h-48 object-cover"
+          />
+        </div>
+      ) : (
         <div className="aspect-video overflow-hidden">
           <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-green-100 flex items-center justify-center">
             <span className="text-gray-500 text-sm">Image placeholder</span>

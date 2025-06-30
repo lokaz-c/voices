@@ -24,6 +24,11 @@ export default function Navigation() {
     await logout();
   };
 
+  // Filter out 'Sustainability and Environment' from navbar categories
+  const navbarCategories = categories.filter(
+    (category) => category.name !== 'Sustainability and Environment'
+  );
+
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +56,7 @@ export default function Navigation() {
                 >
                   Home
                 </Link>
-                {categories.map((category) => (
+                {navbarCategories.map((category) => (
                   <Link
                     key={category.name}
                     href={`/category/${category.slug}`}
@@ -166,12 +171,13 @@ export default function Navigation() {
             {/* User Menu */}
             <div className="relative">
               {isAuthenticated ? (
-                <button
+                <Link
+                  href={isAdmin ? "/admin/dashboard" : "/author/dashboard"}
                   className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                 >
                   <UserIcon className="h-4 w-4 mr-1" />
                   {user?.name || 'User'}
-                </button>
+                </Link>
               ) : (
                 <Link
                   href="/login"
@@ -216,7 +222,7 @@ export default function Navigation() {
                 >
                   Home
                 </Link>
-                {categories.map((category) => (
+                {navbarCategories.map((category) => (
                   <Link
                     key={category.name}
                     href={`/category/${category.slug}`}

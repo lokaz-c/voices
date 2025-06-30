@@ -7,6 +7,7 @@ export interface BlogPost {
   category: BlogCategory;
   publishedAt: string;
   imageUrl?: string;
+  images?: string[];
   readTime: number;
   tags: string[];
 }
@@ -55,7 +56,7 @@ export interface AuthorApplication {
   rejectionReason?: string;
 }
 
-export type BlogCategory = 'Art' | 'Books' | 'Culture and Tourism' | 'Health and Nutrition' | 'Analysis';
+export type BlogCategory = 'Art' | 'Books' | 'Culture and Tourism' | 'Health and Nutrition' | 'Analysis' | 'Sustainability and Environment';
 
 export interface CategoryInfo {
   name: BlogCategory;

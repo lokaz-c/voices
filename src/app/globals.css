@@ -80,3 +80,70 @@ body {
     overflow: hidden;
   }
 }
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  min-height: 200px;
+  padding: 1rem;
+  outline: none;
+}
+
+.ProseMirror table {
+  border-collapse: collapse;
+  margin: 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.ProseMirror td,
+.ProseMirror th {
+  border: 2px solid #ced4da;
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 0.5rem;
+  position: relative;
+  vertical-align: top;
+}
+
+.ProseMirror th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.ProseMirror .selectedCell:after {
+  background: rgba(200, 200, 255, 0.4);
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  @apply animate-spin h-5 w-5 text-blue-600;
+}
+
+/* Editor Toolbar */
+.toolbar-btn {
+  @apply p-2 rounded hover:bg-gray-100 transition-colors;
+}
+
+.toolbar-btn.active {
+  @apply bg-gray-100 text-blue-600;
+}
+
+.toolbar-divider {
+  @apply h-5 w-px bg-gray-200 mx-1;
+}

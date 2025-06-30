@@ -82,6 +82,12 @@ export const categories: CategoryInfo[] = [
     description: 'Deep dives into current events, trends, and thoughtful perspectives',
     color: 'bg-red-100 text-red-800',
     slug: 'analysis'
+  },
+  {
+    name: 'Sustainability and Environment',
+    description: 'Insights, stories, and solutions for a greener, more sustainable world',
+    color: 'bg-emerald-100 text-emerald-800',
+    slug: 'sustainability-and-environment'
   }
 ];
 

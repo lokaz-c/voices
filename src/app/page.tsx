@@ -7,6 +7,7 @@ import { categories } from '@/data/mockData';
 import { blogService, addSubscriber } from '@/lib/firebaseServices';
 import { BlogPost } from '@/types/blog';
 import Link from 'next/link';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 export default function HomePage() {
   const [featuredPosts, setFeaturedPosts] = useState<BlogPost[]>([]);
@@ -14,6 +15,19 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [subscriberEmail, setSubscriberEmail] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'success' | 'error' | 'loading'>('idle');
+
+  // Carousel state
+  const carouselImages = ['/hp.jpg', '/hp1.jpg', '/hp2.jpg'];
+  const [currentSlide, setCurrentSlide] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+  const goToSlide = (idx: number) => setCurrentSlide(idx);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
 
   useEffect(() => {
     loadPosts();
@@ -53,16 +67,55 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
-      {/* Hero Banner */}
-      <section className="relative bg-gradient-to-br from-blue-800 via-blue-600 to-green-500 py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+      {/* Hero Banner with Carousel */}
+      <section className="relative h-[60vh] md:h-[75vh] w-full overflow-hidden flex items-center justify-center">
+        {/* Carousel Images */}
+        {carouselImages.map((src, idx) => (
+          <img
+            key={src}
+            src={src}
+            alt="Hero Carousel"
+            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+            style={{ transitionProperty: 'opacity' }}
+          />
+        ))}
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-blue-700/40 to-green-600/30 z-20" />
+        {/* Carousel Controls */}
+        <button
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white/80 text-blue-900 rounded-full p-2 z-30 shadow-md"
+          onClick={prevSlide}
+          aria-label="Previous Slide"
+        >
+          <FaChevronLeft />
+        </button>
+        <button
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white/80 text-blue-900 rounded-full p-2 z-30 shadow-md"
+          onClick={nextSlide}
+          aria-label="Next Slide"
+        >
+          <FaChevronRight />
+        </button>
+        {/* Dots */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+          {carouselImages.map((_, idx) => (
+            <button
+              key={idx}
+              className={`w-3 h-3 rounded-full border-2 ${idx === currentSlide ? 'bg-white border-blue-700' : 'bg-blue-200 border-white'} transition-all`}
+              onClick={() => goToSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+        {/* Hero Content Overlay */}
+        <div className="relative z-40 max-w-4xl mx-auto text-center text-white px-4">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight drop-shadow-lg">
             Voices and Viewpoints
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
+          <p className="text-xl md:text-2xl mb-8 leading-relaxed drop-shadow">
             A place where ordinary people tell their not-so-ordinary stories...
           </p>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
+          <p className="text-lg max-w-2xl mx-auto mb-8 drop-shadow">
             Voices from and for those who are unheard. Stories that challenge, reflect, and inspire.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

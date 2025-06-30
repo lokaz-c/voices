@@ -26,6 +26,10 @@ import {
   setDoc
 } from 'firebase/firestore';
 import { BlogPost, Comment, Author, AuthorApplication } from '@/types/blog';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import type { FirebaseApp } from 'firebase/app';
+import type { Auth } from 'firebase/auth';
+import type { Firestore } from 'firebase/firestore';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -43,9 +47,9 @@ const isFirebaseConfigured = firebaseConfig.apiKey &&
   firebaseConfig.projectId && 
   firebaseConfig.projectId !== 'your_project_id';
 
-let app: unknown = null;
-let auth: unknown = null;
-let db: unknown = null;
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
 
 if (isFirebaseConfigured) {
   try {
@@ -160,6 +164,15 @@ export const authService = {
   }
 };
 
+// Helper to normalize Firestore Timestamp to string
+function normalizePublishedAt(data: any) {
+  if (data.publishedAt && typeof data.publishedAt === 'object' && data.publishedAt.seconds) {
+    // Firestore Timestamp object
+    return { ...data, publishedAt: new Date(data.publishedAt.seconds * 1000).toISOString() };
+  }
+  return data;
+}
+
 // Blog Posts Service
 export const blogService = {
   // Get all posts
@@ -171,10 +184,7 @@ export const blogService = {
     try {
       const q = query(collection(db, 'posts'), orderBy('publishedAt', 'desc'));
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as BlogPost[];
+      return querySnapshot.docs.map(doc => normalizePublishedAt({ id: doc.id, ...doc.data() })) as BlogPost[];
     } catch (error) {
       console.error('Error getting posts:', error);
       return [];
@@ -191,7 +201,7 @@ export const blogService = {
       const docRef = doc(db, 'posts', id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        return { id: docSnap.id, ...docSnap.data() } as BlogPost;
+        return normalizePublishedAt({ id: docSnap.id, ...docSnap.data() }) as BlogPost;
       }
       return null;
     } catch (error) {
@@ -213,10 +223,7 @@ export const blogService = {
         orderBy('publishedAt', 'desc')
       );
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as BlogPost[];
+      return querySnapshot.docs.map(doc => normalizePublishedAt({ id: doc.id, ...doc.data() })) as BlogPost[];
     } catch (error) {
       console.error('Error getting posts by category:', error);
       return [];
@@ -281,10 +288,7 @@ export const blogService = {
         limit(limitCount)
       );
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as BlogPost[];
+      return querySnapshot.docs.map(doc => normalizePublishedAt({ id: doc.id, ...doc.data() })) as BlogPost[];
     } catch (error) {
       console.error('Error getting featured posts:', error);
       return [];
@@ -727,4 +731,56 @@ export const addSubscriber = async (email: string): Promise<void> => {
     console.error('Error adding subscriber:', error);
     throw error;
   }
-}; 
+};
+
+// Image Upload Service
+export const uploadImageToStorage = async (file: File, path: string): Promise<string> => {
+  if (!app) {
+    throw new Error('Firebase not configured. Please set up your .env.local file.');
+  }
+
+  try {
+    console.log('Starting image upload:', { fileName: file.name, fileSize: file.size, path });
+    
+    const storage = getStorage(app);
+    const storageRef = ref(storage, path);
+    
+    // Upload the file
+    const snapshot = await uploadBytes(storageRef, file);
+    console.log('File uploaded successfully:', snapshot.metadata);
+    
+    // Get the download URL
+    const downloadURL = await getDownloadURL(storageRef);
+    console.log('File download URL:', downloadURL);
+    
+    return downloadURL;
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw new Error(error instanceof Error ? error.message : 'Failed to upload image');
+  }
+};
+
+/**
+ * Upload an image to Cloudinary using unsigned upload.
+ * @param file The image file to upload
+ * @returns The URL of the uploaded image
+ */
+export async function uploadImageToCloudinary(file: File): Promise<string> {
+  const url = 'https://api.cloudinary.com/v1_1/dpe7hla8u/image/upload';
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'voices_unsigned');
+
+  const response = await fetch(url, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Cloudinary upload failed: ${error}`);
+  }
+
+  const data = await response.json();
+  return data.secure_url;
+} 

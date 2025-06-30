@@ -180,7 +180,9 @@ export default function AuthorDashboard() {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {new Date(post.publishedAt).toLocaleDateString()}
+                          {isNaN(new Date(post.publishedAt).getTime())
+                            ? post.publishedAt
+                            : new Date(post.publishedAt).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
