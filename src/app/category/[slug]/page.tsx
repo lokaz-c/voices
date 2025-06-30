@@ -6,14 +6,14 @@ import Navigation from '@/components/Navigation';
 import BlogCard from '@/components/BlogCard';
 import { categories } from '@/data/mockData';
 import { blogService } from '@/lib/firebaseServices';
-import { BlogPost } from '@/types/blog';
+import { BlogPost, CategoryInfo } from '@/types/blog';
 
 export default function CategoryPage() {
   const params = useParams();
   const slug = params.slug as string;
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState<unknown>(null);
+  const [category, setCategory] = useState<CategoryInfo | null>(null);
 
   useEffect(() => {
     loadCategoryData();
@@ -22,7 +22,7 @@ export default function CategoryPage() {
   const loadCategoryData = async () => {
     try {
       // Find the category by slug
-      const foundCategory = categories.find(c => c.slug === slug);
+      const foundCategory = categories.find(c => c.slug === slug) || null;
       setCategory(foundCategory);
 
       if (foundCategory) {
