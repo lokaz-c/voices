@@ -164,7 +164,7 @@ export default function NewPostPage() {
       } else if ((uploadedFile.type === 'application/pdf' || uploadedFile.name.endsWith('.pdf')) && typeof window !== 'undefined') {
         // @ts-ignore
         const pdfjs = await import('pdfjs-dist');
-        pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js';
+        pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
         const arrayBuffer = await uploadedFile.arrayBuffer();
         const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
         let text = '';
