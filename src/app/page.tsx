@@ -80,7 +80,7 @@ export default function HomePage() {
           />
         ))}
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-blue-700/40 to-green-600/30 z-20" />
+        <div className="absolute inset-0 bg-black/40 z-20" />
         {/* Carousel Controls */}
         <button
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white/80 text-blue-900 rounded-full p-2 z-30 shadow-md"
@@ -109,7 +109,7 @@ export default function HomePage() {
         </div>
         {/* Hero Content Overlay */}
         <div className="relative z-40 max-w-4xl mx-auto text-center text-white px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight drop-shadow-lg">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight drop-shadow-lg text-white">
             Voices and Viewpoints
           </h1>
           <p className="text-xl md:text-2xl mb-8 leading-relaxed drop-shadow">
