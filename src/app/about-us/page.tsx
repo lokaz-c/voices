@@ -80,7 +80,7 @@ export default function AboutUsPage() {
             </p>
             <p className="text-gray-700 leading-relaxed">
               Through our six core categories—Art, Books, Culture and Tourism, Health and Nutrition, 
-              Analysis, and About Us—we explore the full spectrum of human experience, from personal 
+              Analysis,Sustainability and Environment, and About Us—we explore the full spectrum of human experience, from personal 
               journeys to global challenges, from creative expression to critical thinking.
             </p>
           </div>
@@ -128,9 +128,10 @@ export default function AboutUsPage() {
                   <h4 className="text-sm font-semibold text-gray-900 mb-2">Areas of Expertise:</h4>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Development Studies</span>
-                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Sustainability</span>
+                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Sustainability and Environment</span>
                     <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Cultural Anthropology</span>
                     <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">Social Justice</span>
+                    <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Arts & Culture</span>
                   </div>
                 </div>
               </div>
@@ -170,7 +171,7 @@ export default function AboutUsPage() {
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <h4 className="text-sm font-semibold text-gray-900 mb-2">Areas of Expertise:</h4>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Sustainability</span>
+                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Sustainability and Environment</span>
                     <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Health & Wellness</span>
                     <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Arts & Culture</span>
                     <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">Travel</span>

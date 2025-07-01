@@ -17,7 +17,7 @@ export default function HomePage() {
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'success' | 'error' | 'loading'>('idle');
 
   // Carousel state
-  const carouselImages = ['/hp.jpg', '/hp1.jpg', '/hp2.jpg'];
+  const carouselImages = ['/hp.jpg', '/hp1.jpg', '/hp2.jpg', '/hp3.jpg'];
   const [currentSlide, setCurrentSlide] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
